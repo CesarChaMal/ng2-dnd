@@ -108,7 +108,7 @@ export abstract class AbstractComponent {
             this._onDragOver(event);
             //
             if (event.dataTransfer != null) {
-                event.dataTransfer.dropEffect = this._config.dropEffect.name;
+                event.dataTransfer.dropEffect = this._config.dropEffect.name as any;
             }
 
             return false;
