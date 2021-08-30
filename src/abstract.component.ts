@@ -9,7 +9,7 @@ import { DragDropConfig, DragImage } from './dnd.config';
 import { DragDropService } from './dnd.service';
 import { isString, isFunction, isPresent, createImage, callFun } from './dnd.utils';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export abstract class AbstractComponent {
     _elem: HTMLElement;
     _dragHandle: HTMLElement;
@@ -91,12 +91,12 @@ export abstract class AbstractComponent {
 
     cloneItem: boolean = false;
 
-    constructor(elemRef: ElementRef, public _dragDropService: DragDropService, public _config: DragDropConfig,
+    constructor(@Inject(ElementRef) private elemRef: ElementRef, public _dragDropService: DragDropService, public _config: DragDropConfig,
         private _cdr: ChangeDetectorRef) {
 
         // Assign default cursor unless overridden
         this._defaultCursor = _config.defaultCursor;
-        this._elem = elemRef.nativeElement;
+        this._elem = this.elemRef.nativeElement;
         this._elem.style.cursor = this._defaultCursor;  // set default cursor on our element
         //
         // DROP events
@@ -299,12 +299,10 @@ export abstract class AbstractComponent {
     _onDragStartCallback(event: Event) { }
     _onDragEndCallback(event: Event) { }
 }
-
 export class AbstractHandleComponent {
     _elem: HTMLElement;
-    constructor(elemRef: ElementRef, public _dragDropService: DragDropService, public _config: DragDropConfig,
+    constructor(private elemRef: ElementRef, public _dragDropService: DragDropService, public _config: DragDropConfig,
         private _Component: AbstractComponent, private _cdr: ChangeDetectorRef) {
-        this._elem = elemRef.nativeElement;
-        this._Component.setDragHandle(this._elem);
+        this._Component.setDragHandle(this.elemRef.nativeElement);
     }
 }
