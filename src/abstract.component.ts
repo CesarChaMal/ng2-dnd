@@ -2,9 +2,7 @@
 // This project is licensed under the terms of the MIT license.
 // https://github.com/akserg/ng2-dnd
 
-import {Injectable, ChangeDetectorRef, ViewRef, Inject} from '@angular/core';
-import {ElementRef} from '@angular/core';
-
+import { Injectable, ChangeDetectorRef, ViewRef, Inject, ElementRef } from '@angular/core';
 import { DragDropConfig, DragImage } from './dnd.config';
 import { DragDropService } from './dnd.service';
 import { isString, isFunction, isPresent, createImage, callFun } from './dnd.utils';
@@ -110,7 +108,6 @@ export abstract class AbstractComponent {
             if (event.dataTransfer != null) {
                 event.dataTransfer.dropEffect = this._config.dropEffect.name as any;
             }
-
             return false;
         };
         this._elem.ondragleave = (event: Event) => {
